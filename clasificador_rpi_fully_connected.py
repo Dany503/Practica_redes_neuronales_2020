@@ -31,5 +31,6 @@ print(dato_prueba.shape)
 print(y_test[12])
 
 print(np.argmax(model.predict(dato_prueba)))
+plt.show()
 
 
