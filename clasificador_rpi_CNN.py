@@ -37,5 +37,6 @@ print(y_test[12])
 
 predicciones = model.predict(x_test[0:20]) # predicciones
 print("Predicción:", np.argmax(predicciones[12]))
+plt.show()
 
 
