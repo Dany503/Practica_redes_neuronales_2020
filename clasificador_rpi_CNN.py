@@ -2,6 +2,8 @@
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
+import numpy as np
+from PIL import Image
 
 model = Sequential()
 model.add(Conv2D(32, (5, 5), activation='relu', input_shape=(28, 28, 1)))
@@ -14,29 +16,11 @@ model.summary()
 
 model.load_weights('CNN.h5')
 
-#%% Cargamos los datos y realizamos las transformaciones
+#%% Predecimos una foto
 
-from keras.datasets import mnist
+img = Image.open('nueve.png').convert('L')
+img_array = np.array(img)
+img_array = 255-img_array
+img_array = img_array[np.newaxis, :,:, np.newaxis]
 
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
-
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
-
-x_test = x_test / 255
-x_test = x_test.reshape(10000, 28, 28, 1)
-x_test = x_test.astype('float32')
-
-#%% Predicción
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-plt.imshow(x_test[12].reshape(28,28), cmap=plt.cm.binary)
-print(y_test[12])
-
-predicciones = model.predict(x_test[0:20]) # predicciones
-print("Predicción:", np.argmax(predicciones[12]))
-plt.show()
-
-
+print("PREDICCIÓN:", np.argmax(model.predict(img_array)))
